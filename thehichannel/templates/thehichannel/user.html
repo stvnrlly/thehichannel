@@ -14,4 +14,19 @@
   </div>
 </p>
 {% endfor %}
+<div class="pagination">
+    <span class="step-links">
+        {% if his.has_previous %}
+            <a href="?page={{ his.previous_page_number }}">◀</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ his.number }} of {{ his.paginator.num_pages }}
+        </span>
+
+        {% if his.has_next %}
+            <a href="?page={{ his.next_page_number }}">▶</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
