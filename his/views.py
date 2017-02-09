@@ -1,8 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from rest_framework import status
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from his.models import Hi
 from his.forms import HiForm
+from his.serializers import HiSerializer
 
 # Create your views here.
 def user_hi(request, user):
@@ -18,7 +26,7 @@ def user_hi(request, user):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         his = paginator.page(paginator.num_pages)
-    
+
     return render(
         request,
         "thehichannel/user.html",
@@ -60,5 +68,38 @@ def all_hi(request):
             }
         )
 
+@login_required
 def profile(request):
-    pass
+    return render(request, "thehichannel/profile.html")
+
+@login_required
+def refresh_token(request):
+    token = Token.objects.get_or_create(user=request.user)[0]
+    token.delete()
+    Token.objects.create(user=request.user)
+    return redirect("/account/profile/")
+
+@api_view(['GET'])
+def api_user_hi(request, user):
+    if request.method == "GET":
+        user = get_object_or_404(User, username=user)
+        hi_list = Hi.objects.filter(sender=user.id).order_by('-timestamp')
+        serializer = HiSerializer(hi_list, many=True)
+
+        return Response(serializer.data)
+
+@api_view(['POST'])
+@authentication_classes((TokenAuthentication,))
+@permission_classes((IsAuthenticated,))
+def api_post_hi(request):
+    if request.method == "POST":
+        data = request.data
+        data['message'] = "hi"
+        data['sender'] = request.user.id
+        serializer = HiSerializer(data=data)
+        print(serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # return Response("hi")

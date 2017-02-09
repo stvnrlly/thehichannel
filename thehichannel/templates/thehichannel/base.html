@@ -30,7 +30,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             {% if user.id %}
-            <li><a href="#">hi, {{ user }}</a></li>
+            <li><a href="/account/profile">hi, {{ user }}</a></li>
             <li><a href="/account/logout">log out</a></li>
             {% else %}
             <li><a href="/account/login">log in</a></li>
