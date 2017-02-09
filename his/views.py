@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from his.models import Hi
 from his.forms import HiForm
-from his.serializers import HiSerializer
+from his.serializers import HiSerializer, PostSerializer
 
 # Create your views here.
 def user_hi(request, user):
@@ -50,7 +50,6 @@ def all_hi(request):
 
     if request.method == "POST":
         request.POST._mutable = True
-        request.POST["message"] = "hi"
         request.POST["sender"] = request.user.id
         request.POST._mutable = False
         form = HiForm(request.POST)
@@ -94,12 +93,9 @@ def api_user_hi(request, user):
 def api_post_hi(request):
     if request.method == "POST":
         data = request.data
-        data['message'] = "hi"
         data['sender'] = request.user.id
-        serializer = HiSerializer(data=data)
-        print(serializer)
+        serializer = PostSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response({"hi": "hi"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        # return Response("hi")
