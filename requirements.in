@@ -1,7 +1,6 @@
 dj-database-url
 Django
-django-registration-redux
-django-two-factor-auth
+django-allauth
 djangorestframework
 ipdb
 ipython

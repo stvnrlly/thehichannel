@@ -3,6 +3,9 @@
 {% block content %}
 <h1>{{ user }}</h1>
 <div id="api-token">
+  <div class="">
+    <a href="/account/password/change/">Change password</a>
+  </div>
   <h2>API Token</h2>
   {% if user.auth_token %}
   <div class="">

@@ -13,8 +13,7 @@ urlpatterns = [
     url(r'^user/(?P<user>\w+)', hi_views.user_hi),
     url(r'^api/', include(api_patterns)),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'', include('two_factor.urls', 'two_factor')),
-    url(r'^account/', include('registration.backends.default.urls')),
+    url(r'^account/', include('allauth.urls')),
     url(r'^account/profile/$', hi_views.profile),
     url(r'^account/refresh_token/$', hi_views.refresh_token),
 
