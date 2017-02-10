@@ -15,6 +15,15 @@
   </div>
   <a class="usa-button" href="/account/refresh_token/">Get a token</a>
   {% endif %}
+  <h2>Two-Factor Authentication</h2>
+  {% if user.totpdevice_set.all %}
+  <div class="">
+    <a href="/account/two_factor/">View settings</a>
+  </div>
+  {% else %}
+  <div class="">
+    <a href="/account/two_factor/setup/">Set up 2FA</a>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
-0
