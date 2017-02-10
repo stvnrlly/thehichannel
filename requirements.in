@@ -1,0 +1,9 @@
+dj-database-url
+Django
+django-registration-redux
+django-two-factor-auth
+djangorestframework
+ipdb
+ipython
+psycopg2
+whitenoise
