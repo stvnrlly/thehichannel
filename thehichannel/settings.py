@@ -46,6 +46,10 @@ INSTALLED_APPS = (
     'letsencrypt',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,6 +57,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -124,7 +129,7 @@ USE_TZ = True
 
 # Authentication
 
-LOGIN_URL = '/login'
+LOGIN_URL = 'two_factor:login'
 
 LOGIN_REDIRECT_URL = '/'
 
