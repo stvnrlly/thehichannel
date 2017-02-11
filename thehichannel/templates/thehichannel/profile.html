@@ -9,24 +9,28 @@
   <h2>API Token</h2>
   {% if user.auth_token %}
   <div class="">
-    Token: {{ user.auth_token }}
+    <p>Token: {{ user.auth_token }}</p>
+    <p><a class="usa-button" href="/account/refresh_token/">Refresh token</a></p>
   </div>
-  <a class="usa-button" href="/account/refresh_token/">Refresh token</a>
   {% else %}
   <div class="">
-    No API Token
+    <p>No API Token</p>
+    <p><a class="usa-button" href="/account/refresh_token/">Get a token</a></p>
   </div>
-  <a class="usa-button" href="/account/refresh_token/">Get a token</a>
   {% endif %}
   <h2>Two-Factor Authentication</h2>
-  {% if user.totpdevice_set.all %}
+  {% for device in user.totpdevice_set.all %}
+  {% if device.confirmed %}
   <div class="">
-    <a href="/account/two_factor/">View settings</a>
+    <p>2FA Enabled!</p>
+    <p><a href="/account/two_factor/backup_tokens/">Get backup tokens</a></p>
+    <p><a href="/account/two_factor/remove/">Disable 2FA</a></p>
   </div>
   {% else %}
   <div class="">
     <a href="/account/two_factor/setup/">Set up 2FA</a>
   </div>
   {% endif %}
+  {% endfor %}
 </div>
 {% endblock %}

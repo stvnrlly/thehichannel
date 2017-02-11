@@ -49,6 +49,10 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'django_otp.plugins.otp_static',
+    'allauth_2fa',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -59,6 +63,15 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Configure the django-otp package. Note this must be after the
+    # AuthenticationMiddleware.
+    'django_otp.middleware.OTPMiddleware',
+
+    # Reset login flow middleware. If this middleware is included, the login
+    # flow is reset if another page is loaded between login and successfully
+    # entering two-factor credentials.
+    'allauth_2fa.middleware.AllauthTwoFactorMiddleware',
 )
 
 ROOT_URLCONF = 'thehichannel.urls'
@@ -147,6 +160,9 @@ SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 ACCOUNT_EMAIL_REQUIRED = True
+
+# Set the allauth adapter to be the 2FA adapter.
+ACCOUNT_ADAPTER = 'allauth_2fa.adapter.OTPAdapter'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
