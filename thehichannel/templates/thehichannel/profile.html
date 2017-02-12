@@ -31,6 +31,10 @@
     <a href="/account/two_factor/setup/">Set up 2FA</a>
   </div>
   {% endif %}
+  {% empty %}
+  <div class="">
+    <a href="/account/two_factor/setup/">Set up 2FA</a>
+  </div>
   {% endfor %}
 </div>
 {% endblock %}
