@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
--e file:///Users/SR/Sync/dev/django-allauth-2fa/
+-e git+https://github.com/stvnrlly/django-allauth-2fa.git@url-slashes#egg=django-allauth-2fa
 appdirs==1.4.0            # via setuptools
 appnope==0.1.0            # via ipython
 decorator==4.0.11         # via ipython, traitlets
