@@ -1,6 +1,6 @@
 dj-database-url
 Django
-django-allauth
+django-allauth==0.26.1
 -e git+https://github.com/stvnrlly/django-allauth-2fa.git@url-slashes#egg=django-allauth-2fa
 djangorestframework
 ipdb
