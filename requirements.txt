@@ -13,6 +13,8 @@ dj-database-url==0.4.2
 django-otp==0.3.8
 django==1.10.5            # via django-allauth, django-otp
 djangorestframework==3.5.3
+factory-boy==2.8.1
+faker==0.7.7              # via factory-boy
 ipdb==0.10.2
 ipython-genutils==0.1.0   # via traitlets
 ipython==5.2.2
@@ -26,13 +28,15 @@ ptyprocess==0.5.1         # via pexpect
 py==1.4.32                # via pytest
 pygments==2.2.0           # via ipython
 pyparsing==2.1.10         # via packaging
+pytest-django==3.1.2
 pytest==3.0.6
+python-dateutil==2.6.0    # via faker
 python3-openid==3.0.10    # via django-allauth
 qrcode==5.3
 requests-oauthlib==0.7.0  # via django-allauth
 requests==2.13.0          # via django-allauth, requests-oauthlib
 simplegeneric==0.8.1      # via ipython
-six==1.10.0               # via packaging, prompt-toolkit, qrcode, setuptools, traitlets
+six==1.10.0               # via faker, packaging, prompt-toolkit, python-dateutil, qrcode, setuptools, traitlets
 traitlets==4.3.1          # via ipython
 wcwidth==0.1.7            # via prompt-toolkit
 whitenoise==3.3.0
