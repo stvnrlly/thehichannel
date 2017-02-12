@@ -16,6 +16,7 @@ django==1.10.5            # via django-allauth, django-otp
 djangorestframework==3.5.4
 factory-boy==2.8.1
 faker==0.7.7              # via factory-boy
+gunicorn==19.6.0
 ipdb==0.10.2
 ipython-genutils==0.1.0   # via traitlets
 ipython==5.2.2
