@@ -78,6 +78,9 @@ def refresh_token(request):
     Token.objects.create(user=request.user)
     return redirect("/account/profile/")
 
+def api_docs(request):
+    return render(request, "thehichannel/api_docs.html")
+
 @api_view(['GET'])
 def api_user_hi(request, user):
     if request.method == "GET":

@@ -4,6 +4,7 @@ from his import views as hi_views
 from letsencrypt import views as le_views
 
 api_patterns = [
+    url(r'^$', hi_views.api_docs),
     url(r'^user/(?P<user>\w+)', hi_views.api_user_hi),
     url(r'^post', hi_views.api_post_hi),
 ]

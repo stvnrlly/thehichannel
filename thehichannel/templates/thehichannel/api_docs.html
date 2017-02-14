@@ -1,0 +1,46 @@
+{% extends "thehichannel/base.html" %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Hi API</h1>
+</div>
+<h2><code>GET /api/user/[USER]</code></h2>
+<div class="">
+  <p>Returns posts from <code>[USER]</code>.</p>
+  <p>Request:</p>
+  <p><kbd>$ curl https://thehichannel.com/api/user/stvnrlly/</kbd></p>
+  <p>Response:
+    <pre>
+[
+    {
+        "hi": "hi",
+        "sender": "stvnrlly",
+        "timestamp": "2017-02-14T00:50:20.365314Z"
+    },
+    {
+        "hi": "hi",
+        "sender": "stvnrlly",
+        "timestamp": "2017-02-14T00:50:16.166495Z"
+    },
+    {
+        "hi": "hi",
+        "sender": "stvnrlly",
+        "timestamp": "2017-02-13T05:41:54.788892Z"
+    }
+]</pre>
+  </p>
+</div>
+<hr>
+<h2><code>POST /api/post/</code></h2>
+<div class="">
+  <p>Makes a post. Authorization is required: pass a valid token in the <code>Authorization</code> header.</p>
+  <p>Request:</p>
+  <p><kbd>$ curl -H "Authorization: token [YOUR_TOKEN]" https://thehichannel.com/api/post/</kbd></p>
+  <p>Response:
+    <pre>
+{
+    "hi": "hi"
+}</pre>
+  </p>
+</div>
+{% endblock %}
