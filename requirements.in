@@ -9,3 +9,4 @@ pytest
 pytest-django
 psycopg2
 whitenoise
+channels
