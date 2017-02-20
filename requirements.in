@@ -2,10 +2,11 @@ dj-database-url
 -e git+https://github.com/stvnrlly/django-allauth-2fa.git@url-slashes#egg=django-allauth-2fa
 djangorestframework
 factory_boy
-gunicorn
 ipdb
 ipython
 pytest
 pytest-django
 psycopg2
 whitenoise
+channels
+asgi_redis

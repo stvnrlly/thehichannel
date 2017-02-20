@@ -1,44 +1,91 @@
 {% extends "thehichannel/base.html" %}
-{% load humanize %}
+{% load static from staticfiles %}
 
 {% block content %}
-<h1>Hi</h1>
 {% if user.id %}
-<form class="" action="/" method="post">
-  {% csrf_token %}
+<form id="hiform">
   <div class="form-group">
-    {{ form.message.errors }}
-    {{ form.message.label_tag }}
-    {{ form.message }}
+    <label for="message">Say hi:</label>
+    <input class="form-control" type="text" id="message" placeholder="hi">
   </div>
-  <input type="submit" class="btn btn-default" value="Hi" />
+  <button class="btn btn-default" type="submit" id="say-hi">hi</button>
 </form>
 {% endif %}
-<h2>Recently</h2>
-{% for hi in his %}
-<p>
-  <div class="">
-    <blockquote>
-      {{ hi.hi }}
-      <br>
-    <small><a href="/user/{{ hi.sender }}">{{ hi.sender }}</a>, {{ hi.timestamp|naturaltime }}</small>
-    </blockquote>
-  </div>
-</p>
-{% endfor %}
-<div class="pagination">
-    <span class="step-links">
-        {% if his.has_previous %}
-            <a href="?page={{ his.previous_page_number }}">◀</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ his.number }} of {{ his.paginator.num_pages }}
-        </span>
-
-        {% if his.has_next %}
-            <a href="?page={{ his.next_page_number }}">▶</a>
-        {% endif %}
-    </span>
+<h1>Hi</h1>
+<div id="hi-list">
+  {% for hi in his %}
+  <blockquote>
+    {{ hi.hi }}
+    <br>
+    <small><a href="/user/{{ hi.sender }}">{{ hi.sender }}</a>, <span class="timestamp hidden" data-timestamp={{ hi.timestamp|date:"U" }}>{{ hi.timestamp|date:"U" }}</span></small>
+  </blockquote>
+  {% endfor %}
 </div>
+<div class="pagination">
+  <span class="step-links">
+    {% if his.has_previous %}
+    <a href="?page={{ his.previous_page_number }}">◀</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ his.number }} of {{ his.paginator.num_pages }}
+    </span>
+
+    {% if his.has_next %}
+    <a href="?page={{ his.next_page_number }}">▶</a>
+    {% endif %}
+  </span>
+</div>
+<script type="text/javascript" src='{% static "js/reconnecting-websocket.min.js" %}'></script>
+<script type="text/javascript">
+// When we're using HTTPS, use WSS too.
+const ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+const socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + '/');
+
+const relativeTime = function() {
+  $(".timestamp").each(function(i) {
+    let time = $(this).attr('data-timestamp');
+    $(this).text(moment(time, 'X').fromNow());
+  });
+}
+
+$(document).ready(function(event) {
+  relativeTime();
+  $(".timestamp").removeClass("hidden");
+});
+
+// What to do when a message comes through the websocket
+socket.onmessage = function(message) {
+  var data = JSON.parse(message.data);
+  var hilist = $("#hi-list");
+  var block = $('<blockquote></blockquote').text(data['hi']);
+  var sender = $('<a>', {text: data['sender'], href: '/user/'+data['sender']});
+  var timestamp = $('<span>', {text: 'now', class: 'timestamp', "data-timestamp": data['timestamp']});
+  var note = $('<small></small>').append(sender).append(', ').append(timestamp);
+  block.append(note);
+  hilist.prepend(block);
+  relativeTime();
+};
+
+// What to do when the socket opens
+// socket.onopen = function() {
+//   console.log('socket open!');
+//   socket.send("hello world");
+// }
+
+// Form submission
+$("#hiform").on("submit", function(event) {
+  var message = {
+    sender: {{ user.id }},
+    message: $('#message').val(),
+  }
+  socket.send(JSON.stringify(message));
+  $("#message").val('').focus();
+  return false;
+});
+
+setInterval(function () {
+  relativeTime();
+}, 10000);
+</script>
 {% endblock %}

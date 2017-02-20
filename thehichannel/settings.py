@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'django_otp.plugins.otp_totp',
     'django_otp.plugins.otp_static',
     'allauth_2fa',
+    'channels',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -94,6 +95,24 @@ TEMPLATES = [
         },
     },
 ]
+
+# Channels
+# https://channels.readthedocs.io/en/stable/getting-started.html
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        },
+        "ROUTING": "thehichannel.routing.channel_routing",
+    },
+    # "debug": {
+    #     "BACKEND": "asgiref.inmemory.ChannelLayer",
+    #     "ROUTING": "thehichannel.routing.channel_routing",
+    # },
+
+}
 
 # Registration
 # https://django-registration-redux.readthedocs.io/
@@ -170,7 +189,7 @@ ACCOUNT_ADAPTER = 'allauth_2fa.adapter.OTPAdapter'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 STATICFILES_DIRS = [
-
+    os.path.join(BASE_DIR, "third-party/")
 ]
 
 # REST Framework
