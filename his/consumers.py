@@ -1,5 +1,6 @@
 # import re
 import json
+from datetime import datetime
 # import logging
 from channels import Group
 from channels.sessions import channel_session
@@ -41,7 +42,7 @@ def ws_receive(message):
         response = {
             'hi': 'hi',
             'sender': hi.sender.username,
-            'timestamp': naturaltime(hi.timestamp)
+            'timestamp': datetime.timestamp(hi.timestamp)
         }
         Group('hi-stream', channel_layer=message.channel_layer).send({
             'text': json.dumps(response)

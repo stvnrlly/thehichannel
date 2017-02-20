@@ -107,6 +107,11 @@ CHANNEL_LAYERS = {
         },
         "ROUTING": "thehichannel.routing.channel_routing",
     },
+    # "debug": {
+    #     "BACKEND": "asgiref.inmemory.ChannelLayer",
+    #     "ROUTING": "thehichannel.routing.channel_routing",
+    # },
+
 }
 
 # Registration
@@ -184,7 +189,7 @@ ACCOUNT_ADAPTER = 'allauth_2fa.adapter.OTPAdapter'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 STATICFILES_DIRS = [
-
+    os.path.join(BASE_DIR, "third-party/")
 ]
 
 # REST Framework
