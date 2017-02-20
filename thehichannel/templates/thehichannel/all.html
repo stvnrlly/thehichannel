@@ -42,7 +42,7 @@
 
 // When we're using HTTPS, use WSS too.
 var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-var socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host);
+var socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + '/');
 
 // What to do when a message comes through the websocket
 socket.onmessage = function(message) {
