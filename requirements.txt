@@ -7,10 +7,11 @@
 git+https://github.com/stvnrlly/django-allauth-2fa.git@url-slashes#egg=django-allauth-2fa
 appdirs==1.4.0            # via setuptools
 appnope==0.1.0            # via ipython
-asgiref==1.0.0            # via channels, daphne
+asgi-redis==1.0.0
+asgiref==1.0.0            # via asgi-redis, channels, daphne
 attrs==16.3.0             # via automat
 autobahn==0.17.1          # via daphne
-Automat==0.5.0            # via twisted
+automat==0.5.0            # via twisted
 channels==1.0.3
 constantly==15.1.0        # via twisted
 daphne==1.0.3             # via channels
@@ -23,11 +24,11 @@ django==1.10.5            # via channels, django-allauth, django-otp
 djangorestframework==3.5.4
 factory-boy==2.8.1
 faker==0.7.7              # via factory-boy
-gunicorn==19.6.0
 incremental==16.10.1      # via twisted
 ipdb==0.10.2
 ipython-genutils==0.1.0   # via traitlets
 ipython==5.2.2
+msgpack-python==0.4.8     # via asgi-redis
 oauthlib==2.0.1           # via requests-oauthlib
 packaging==16.8           # via setuptools
 pexpect==4.2.1            # via ipython
@@ -43,10 +44,11 @@ pytest==3.0.6
 python-dateutil==2.6.0    # via faker
 python3-openid==3.0.10    # via django-allauth
 qrcode==5.3
+redis==2.10.5             # via asgi-redis
 requests-oauthlib==0.7.0  # via django-allauth
 requests==2.13.0          # via django-allauth, requests-oauthlib
 simplegeneric==0.8.1      # via ipython
-six==1.10.0               # via asgiref, autobahn, automat, faker, packaging, prompt-toolkit, python-dateutil, qrcode, setuptools, traitlets, txaio
+six==1.10.0               # via asgi-redis, asgiref, autobahn, automat, faker, packaging, prompt-toolkit, python-dateutil, qrcode, setuptools, traitlets, txaio
 traitlets==4.3.1          # via ipython
 twisted==17.1.0           # via daphne
 txaio==2.6.1              # via autobahn
